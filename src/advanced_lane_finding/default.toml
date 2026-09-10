@@ -1,0 +1,56 @@
+[calibration]
+chessboard_columns = 9
+chessboard_rows = 6
+square_size = 1.0
+
+[threshold]
+sobel_kernel = 3
+gradient_x = [30, 200]
+gradient_magnitude = [70, 170]
+gradient_direction = [0.3, 1.1]
+hls_saturation = [140, 255]
+hls_lightness = [200, 255]
+
+[perspective]
+source = [
+    [0.195, 0.94],
+    [0.465, 0.62],
+    [0.535, 0.62],
+    [0.850, 0.94],
+]
+destination = [
+    [0.195, 1.0],
+    [0.195, 0.0],
+    [0.850, 0.0],
+    [0.850, 1.0],
+]
+
+[search]
+windows = 9
+margin = 100
+minimum_pixels = 50
+previous_fit_margin = 80
+
+[validation]
+minimum_lane_pixels = 300
+minimum_lane_width_m = 2.8
+maximum_lane_width_m = 4.5
+maximum_width_variation_m = 1.0
+
+[tracking]
+history_size = 5
+maximum_failures = 5
+
+[measurement]
+lane_width_m = 3.7
+visible_road_length_m = 30.0
+
+[render]
+lane_color_bgr = [0, 255, 0]
+text_color_bgr = [0, 255, 255]
+overlay_alpha = 0.3
+font_scale = 1.0
+line_thickness = 2
+
+[video]
+codec = "mp4v"
