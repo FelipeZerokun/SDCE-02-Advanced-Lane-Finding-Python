@@ -1,0 +1,52 @@
+[project]
+name = "advanced-lane-finding"
+version = "0.1.0"
+description = "A configurable computer-vision pipeline for detecting curved road lanes in images and videos."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Felipe Rojas", email = "epilefrojasleon@gmail.com" }
+]
+keywords = [
+    "advanced-lane-finding",
+    "computer-vision",
+    "lane-detection",
+    "opencv",
+    "self-driving-car",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+    "numpy>=2.5.3",
+    "opencv-python-headless>=5.0.0.93",
+]
+
+[project.urls]
+Homepage = "https://github.com/FelipeZerokun/SDCE-02-Advanced-Lane-Finding-Python"
+Repository = "https://github.com/FelipeZerokun/SDCE-02-Advanced-Lane-Finding-Python"
+Issues = "https://github.com/FelipeZerokun/SDCE-02-Advanced-Lane-Finding-Python/issues"
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.6",
+]
+notebook = [
+    "jupyterlab>=4.6.3",
+    "matplotlib>=3.11.1",
+]
