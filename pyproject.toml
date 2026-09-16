@@ -53,3 +53,6 @@ notebook = [
 
 [tool.ruff]
 extend-exclude = ["legacy"]
+
+[project.scripts]
+advanced-lane-finding = "advanced_lane_finding.cli:main"
