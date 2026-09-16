@@ -139,3 +139,29 @@ def test_rejects_excessive_lane_width_variation() -> None:
             measurement=_measurement_config(),
             validation=_validation_config(),
         )
+
+
+def test_accepts_narrow_far_field_when_near_widths_are_valid() -> None:
+    fit = LaneFit(
+        left_coefficients=np.asarray(
+            [0.0, 0.0, 20.0],
+            dtype=np.float64,
+        ),
+        right_coefficients=np.asarray(
+            [0.0, 0.3, 62.5],
+            dtype=np.float64,
+        ),
+    )
+
+    result = validate_lane_fit(
+        fit=fit,
+        image_size=(101, 51),
+        perspective=_perspective_config(),
+        measurement=_measurement_config(),
+        validation=_validation_config(),
+    )
+
+    assert result.top_width_m == pytest.approx(2.55)
+    assert result.middle_width_m == pytest.approx(3.0)
+    assert result.bottom_width_m == pytest.approx(3.45)
+    assert result.width_variation_m == pytest.approx(0.9)

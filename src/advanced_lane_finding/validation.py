@@ -107,10 +107,21 @@ def validate_lane_fit(
         bottom_width_m=float(widths_m[2]),
     )
 
-    if result.minimum_width_m < validation.minimum_lane_width_m:
-        raise LaneValidationError("Lane width is below the configured minimum")
+    near_field_widths = (
+        result.middle_width_m,
+        result.bottom_width_m,
+    )
 
-    if result.maximum_width_m > validation.maximum_lane_width_m:
+    if min(near_field_widths) < validation.minimum_lane_width_m:
+        raise LaneValidationError(
+            "Lane width is below the configured minimum: "
+            f"top={result.top_width_m:.3f} m, "
+            f"middle={result.middle_width_m:.3f} m, "
+            f"bottom={result.bottom_width_m:.3f} m "
+            f"(limit={validation.minimum_lane_width_m:.3f} m)"
+        )
+
+    if max(near_field_widths) > validation.maximum_lane_width_m:
         raise LaneValidationError("Lane width is above the configured maximum")
 
     if result.width_variation_m > validation.maximum_width_variation_m:

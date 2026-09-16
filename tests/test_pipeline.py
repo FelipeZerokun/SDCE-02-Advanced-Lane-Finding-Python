@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest.mock import patch
 
 import cv2
 import numpy as np
@@ -10,7 +11,7 @@ from advanced_lane_finding.calibration import (
     calibrate_camera,
 )
 from advanced_lane_finding.config import load_config
-from advanced_lane_finding.detector import DetectionError
+from advanced_lane_finding.detector import DetectionError, LaneFit
 from advanced_lane_finding.pipeline import process_image
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -69,6 +70,51 @@ def test_processes_real_road_image() -> None:
     )
     assert np.any(result.rendered_image != result.undistorted_image)
     np.testing.assert_array_equal(image, original)
+
+    with patch(
+        "advanced_lane_finding.pipeline.find_lane_pixels",
+        side_effect=AssertionError("Sliding windows were used"),
+    ):
+        tracked = process_image(
+            image,
+            calibration,
+            config,
+            previous_fit=result.lane_fit,
+        )
+
+    assert tracked.lane_pixels.left_count >= config.validation.minimum_lane_pixels
+    assert tracked.lane_pixels.right_count >= config.validation.minimum_lane_pixels
+
+    stale_fit = LaneFit(
+        left_coefficients=np.asarray(
+            [0.0, 0.0, -1000.0],
+            dtype=np.float64,
+        ),
+        right_coefficients=np.asarray(
+            [0.0, 0.0, 2000.0],
+            dtype=np.float64,
+        ),
+    )
+
+    recovered = process_image(
+        image,
+        calibration,
+        config,
+        previous_fit=stale_fit,
+    )
+
+    np.testing.assert_allclose(
+        recovered.lane_fit.left_coefficients,
+        result.lane_fit.left_coefficients,
+    )
+    np.testing.assert_allclose(
+        recovered.lane_fit.right_coefficients,
+        result.lane_fit.right_coefficients,
+    )
+    np.testing.assert_array_equal(
+        recovered.rendered_image,
+        result.rendered_image,
+    )
 
 
 def test_rejects_image_with_wrong_calibration_size() -> None:
