@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.ipynb_checkpoints/
+outputs/
+
+# Additional local test media
+data/test_images/*
+!data/test_images/test1.jpg
+
+data/test_videos/*
+!data/test_videos/project_video.mp4
