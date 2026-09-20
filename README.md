@@ -8,6 +8,8 @@ A configurable computer-vision pipeline for detecting curved road-lane boundarie
 
 This repository modernizes the Advanced Lane Finding project from Udacity's Self-Driving Car Engineer Nanodegree as a typed, tested Python package with a command-line interface. It follows the simpler [Finding Lane Lines — Python project](https://github.com/FelipeZerokun/SDCE-01-Finding-Lane-Lines-Python), but handles curved roads and camera distortion rather than relying on straight-line detection.
 
+The [C++ implementation](https://github.com/FelipeZerokun/SDCE-02-Advanced-Lane-Finding-CPP) follows the same detection stages. Each repository documents its own setup, commands, and currently supported configuration options.
+
 ## Features
 
 - Calibrates a camera from chessboard photographs and saves reusable calibration data.
